@@ -8,22 +8,38 @@
 import SwiftUI
 
 struct DailyNewsView: View {
+    //MARK: PROPERTY
+    @State var news: News = dataNewsMock
     
+    @State private var searchText: String = ""
+    
+    
+    //MARK: BODY
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
+                
                 VStack {
-                    Image(systemName: "globe")
-                        .imageScale(.large)
-                        .foregroundColor(.accentColor)
-                    Text("Hello, world!")
+                    //MARK: SearchView
+                    SearchView(searchText: $searchText)
+                    
+                    Spacer()
+                    //MARK: ListDailyNewsView
+                    ForEach(news.articles, id: \.id) { article in
+                        NavigationLink(destination: DetailNewsView()
+                            .hideNavigationBarBsforeDestinationViewLink()
+                        ) {
+                            RowNewsView()
+                        }
+                    }
+                    
                 }//: VStack
-                .padding()
-                .frame(height: 900)
                 .navigationTitle("News")
+                .background(Color.white)
             }//: ScrollView
-            
+            .background(Color("GreenAppThemeColor"))
         }//: NavigationView
+        .edgesIgnoringSafeArea(.all)
         
     }
 }

@@ -7,7 +7,18 @@
 
 import SwiftUI
 
+
+//MARK: View property
+var limitLineDescText: Int = 6
+var maxRowImageHight: CGFloat = 200
+var maxDetailImageHight: CGFloat = 360
+
+//MARK: View function
 func setNavigationThemeColor() {
     UINavigationBar.appearance().barTintColor = UIColor(Color("GreenAppThemeColor"))
-    UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.white]
+    UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor(.white)]
+    UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor(.white)]
+
 }
+
+
