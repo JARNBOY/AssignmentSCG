@@ -9,10 +9,8 @@ import SwiftUI
 
 struct DailyNewsView: View {
     //MARK: PROPERTY
-    @State var news: News = dataNewsMock
-    
     @State private var searchText: String = ""
-    
+    @StateObject private var vm = DailyNewsViewModel()
     
     //MARK: BODY
     var body: some View {
@@ -25,13 +23,18 @@ struct DailyNewsView: View {
                     
                     Spacer()
                     //MARK: ListDailyNewsView
-                    ForEach(news.articles, id: \.id) { article in
-                        NavigationLink(destination: DetailNewsView()
-                            .hideNavigationBarBsforeDestinationViewLink()
-                        ) {
-                            RowNewsView()
+                    if let news = vm.news {
+                        ForEach(news.articles, id: \.title) { article in
+                            NavigationLink(destination: DetailNewsView()
+                                .hideNavigationBarBsforeDestinationViewLink()
+                            ) {
+                                RowNewsView()
+                            }
                         }
+                    } else {
+                        //MARK: EmptyAndRetryView
                     }
+                    
                     
                 }//: VStack
                 .navigationTitle("News")
@@ -40,6 +43,9 @@ struct DailyNewsView: View {
             .background(Color("GreenAppThemeColor"))
         }//: NavigationView
         .edgesIgnoringSafeArea(.all)
+        .task {
+            await vm.requestNews()
+        }
         
     }
 }

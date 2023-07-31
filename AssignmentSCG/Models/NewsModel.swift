@@ -7,15 +7,13 @@
 
 import SwiftUI
 
-struct News: Codable, Identifiable {
-    var id: UUID = UUID()
+struct NewsModel: Codable {
     let status: String
     let totalResults: Int
     let articles: [Article]
 }
 
-struct Article: Codable, Identifiable {
-    var id: UUID = UUID()
+struct Article: Codable {
     let title: String
     let description: String
     let urlToImage: String

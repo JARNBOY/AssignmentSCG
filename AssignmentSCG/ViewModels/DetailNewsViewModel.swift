@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+@MainActor class DetailNewsViewModel: ObservableObject {
+    
+}

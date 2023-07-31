@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-let dataNewsMock: News = News(
+let dataNewsMock: NewsModel = NewsModel(
     status: "ok",
     totalResults: 38,
     articles: [
