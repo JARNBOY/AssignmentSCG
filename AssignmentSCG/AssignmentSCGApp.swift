@@ -9,6 +9,12 @@ import SwiftUI
 
 @main
 struct AssignmentSCGApp: App {
+    
+    init() {
+        //set color NavigationBar
+        setNavigationThemeColor()
+    }
+    
     var body: some Scene {
         WindowGroup {
             DailyNewsView()

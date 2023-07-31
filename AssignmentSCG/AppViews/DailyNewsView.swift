@@ -9,11 +9,6 @@ import SwiftUI
 
 struct DailyNewsView: View {
     
-    init() {
-        //set color NavigationBar
-        setNavigationThemeColor()
-    }
-    
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
