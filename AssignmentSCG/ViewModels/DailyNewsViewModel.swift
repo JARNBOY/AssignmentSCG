@@ -12,11 +12,14 @@ protocol DailyNewsViewModelInterface {
     
     var rowStartIndex: Int { get }
     var rowEndIndex: Int { get }
+    var lastRowArticle: Article { get }
+    
     
     func requestNews(currentArticle: Article?) async
     func refreshNews() async
     func clearPage()
     func isShouldLoadMoreData(currentArticle: Article?) -> Bool
+    func isScrollNearLastRow(currentOffsetY: CGFloat) -> Bool
 //    func combineRequest(endpoint: String)
     
 }
@@ -25,6 +28,7 @@ protocol DailyNewsViewModelInterface {
 @MainActor class DailyNewsViewModel: ObservableObject {
     @Published var articles: [Article] = []
     @Published var error: ErrorType? = nil
+    @Published var isEmptyNewsData: Bool = false
     
     private var service: NewsService
     var loadStatus = LoadStatus.ready(nextPage: 1)
@@ -42,7 +46,11 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
         
     }
     var rowEndIndex: Int {
-        return articles.isEmpty ? -1 : articles.endIndex
+        return articles.isEmpty ? -1 : articles.endIndex - 1
+    }
+    
+    var lastRowArticle: Article {
+        return articles[rowEndIndex]
     }
     
     func requestNews(currentArticle: Article?) async {
@@ -60,7 +68,7 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
             loadStatus = .loading(page: page)
             
             //request
-            let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam)&page=\(page)")
+            let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam02)&page=\(page)")
             
             //condition append new data
             guard  newsData.status == StatusType.ok.rawValue else {
@@ -68,6 +76,7 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
                 loadStatus = .done
                 return
             }
+            
             
             //initial set data value for update UI
             if self.articles.isEmpty {
@@ -82,6 +91,10 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
             } else {
                 loadStatus = .ready(nextPage: page + 1)
             }
+            
+            //set case is Empty when call first time (case apiKey is over limit)
+            isEmptyNewsData = self.articles.isEmpty
+            
             
         } catch (let error) {
             loadStatus = .parseError
@@ -98,7 +111,7 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
             return true
         }
         
-        return currentArticle.id == articles[rowEndIndex - 1].id
+        return currentArticle.id == articles[rowEndIndex].id
     }
     
     func refreshNews() async {
@@ -110,6 +123,18 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
         self.articles = []
         self.loadStatus = LoadStatus.ready(nextPage: 1)
         self.error = nil
+    }
+    
+    func isScrollNearLastRow(currentOffsetY: CGFloat) -> Bool {
+        if articles.isEmpty {
+            return false
+        } else {
+            let allHeightSize = articles.count * heightFrameRowNews
+            let diffSpace = 1000
+            let minusHeigh = -(allHeightSize - diffSpace)
+//            print("scrollPosition: \(allHeightSize), minusHeigh: \(minusHeigh) \n \(currentOffsetY) < \(CGFloat(minusHeigh))")
+            return currentOffsetY < CGFloat(minusHeigh)
+        }
     }
     
     

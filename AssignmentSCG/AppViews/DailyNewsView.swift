@@ -32,13 +32,9 @@ struct DailyNewsView: View {
                             .hideNavigationBarBsforeDestinationViewLink()
                         ) {
                             RowNewsView( article: article )
-                                .onAppear {
-                                    Task {
-                                        await vm.requestNews(currentArticle: vm.articles.isEmpty ? nil : article)
-                                    }
-                                }
                         }
                     }//: ForEach
+                    
                 }//: VStack
                 .navigationTitle("News")
                 .background(Color.white)
@@ -48,6 +44,11 @@ struct DailyNewsView: View {
                 })
                 .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
                     self.scrollPosition = value
+                    if self.vm.isScrollNearLastRow(currentOffsetY: self.scrollPosition.y) {
+                        Task {
+                            await vm.requestNews(currentArticle: vm.lastRowArticle)
+                        }
+                    }
                 }
             }//: ScrollView
             .background(Color("GreenAppThemeColor"))
