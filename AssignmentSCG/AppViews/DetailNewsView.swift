@@ -12,6 +12,7 @@ struct DetailNewsView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var article: Article
+    @State private var isAnimating: Bool = false
     
     //MARK: BODY
     var body: some View {
@@ -31,16 +32,19 @@ struct DetailNewsView: View {
                         .modifier(TitleModifier())
                         .padding(.top)
                         .padding(.horizontal)
+                        .opacity(isAnimating ? 1 : 0)
                     
                     //MARK: Desc
                     Text(article.description ?? "")
                         .modifier(DsecModifier())
                         .padding(.horizontal)
+                        .opacity(isAnimating ? 1 : 0)
                     
                     //MARK: Date
                     Text("Updated: \((article.publishedAt ?? "").toDateNewsDisplay())")
                         .modifier(DateTextModifier())
                         .padding(.horizontal)
+                        .opacity(isAnimating ? 1 : 0)
                     
                     //MARK: Spacer White Bottom
                     SpaceTextScaleView()
@@ -69,6 +73,9 @@ struct DetailNewsView: View {
             .foregroundColor(.white)
             .background(Color("GreenAppThemeColor"))
         }//: NavigationView
+        .onAppear {
+            isAnimating.toggle()
+        }
         
     }
 }

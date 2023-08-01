@@ -13,6 +13,7 @@ struct ImageNewsView: View {
     var maxHeight: CGFloat
     var urlString: String
     
+    @State private var isAnimatingImage: Bool = false
     //MARK: BODY
     
     var body: some View {
@@ -27,6 +28,12 @@ struct ImageNewsView: View {
                 ProgressView()
             }
         )
+        .scaleEffect(isAnimatingImage ? 1.0 : 0.6)
+        .onAppear() {
+          withAnimation(.easeOut(duration: 0.5)) {
+            isAnimatingImage = true
+          }
+        }
     }
 }
 

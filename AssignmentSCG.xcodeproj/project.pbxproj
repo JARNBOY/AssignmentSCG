@@ -84,14 +84,13 @@
 		FB9460482A77AC790055E708 /* AssignmentSCG */ = {
 			isa = PBXGroup;
 			children = (
-				FB9460612A77AD500055E708 /* Models */,
-				FB9460582A77AC890055E708 /* ViewModels */,
 				FB9460572A77AC810055E708 /* AppViews */,
 				FB9460642A77B1250055E708 /* ComponentViews */,
+				FB9460582A77AC890055E708 /* ViewModels */,
+				FB9460612A77AD500055E708 /* Models */,
 				FB9460592A77AC910055E708 /* Helpers */,
 				FB9460662A77B2680055E708 /* Modify */,
 				FB9976B02A78049F006804CA /* Extension */,
-				FB9460492A77AC7A0055E708 /* AssignmentSCGApp.swift */,
 				FB94604D2A77AC7C0055E708 /* Assets.xcassets */,
 				FB9460652A77B15E0055E708 /* Info.plist */,
 				FB94604F2A77AC7C0055E708 /* Preview Content */,
@@ -110,6 +109,7 @@
 		FB9460572A77AC810055E708 /* AppViews */ = {
 			isa = PBXGroup;
 			children = (
+				FB9460492A77AC7A0055E708 /* AssignmentSCGApp.swift */,
 				FB94604B2A77AC7A0055E708 /* DailyNewsView.swift */,
 				FB94605F2A77AD450055E708 /* DetailNewsView.swift */,
 			);

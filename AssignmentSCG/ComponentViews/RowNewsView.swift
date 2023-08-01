@@ -14,6 +14,7 @@ public struct RowNewsView: View {
     private let isDetailView: Bool = true
     
     @State var article: Article
+    @State private var isAnimating: Bool = false
     
     //MARK: BODY
     public var body: some View {
@@ -25,28 +26,33 @@ public struct RowNewsView: View {
                 maxHeight: maxRowImageHight,
                 urlString: article.urlToImage ?? ""
             )
-                .cornerRadius(10)
+            .cornerRadius(10)
             
             //MARK: Title
             Text(article.title ?? "")
                 .modifier(TitleModifier())
                 .padding(.top)
+                .opacity(isAnimating ? 1 : 0)
             
             //MARK: Desc
             Text(article.description ?? "")
                 .modifier(DsecModifier())
                 .lineLimit(isDescLimitLine ? limitLineDescText : nil)
+                .opacity(isAnimating ? 1 : 0)
             
             //MARK: Date
             Text("Updated: \((article.publishedAt ?? "").toDateNewsDisplay())")
                 .modifier(DateTextModifier())
-            
+                .opacity(isAnimating ? 1 : 0)
             
             
             Divider()
                 .padding(.vertical)
         }
         .padding()
+        .onAppear {
+            isAnimating.toggle()
+        }
     }
 }
 
