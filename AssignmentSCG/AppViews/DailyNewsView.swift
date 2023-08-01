@@ -48,6 +48,8 @@ struct DailyNewsView: View {
                         }
                     }//: ForEach
                     
+                    //MARK: EmptyRetryView
+                    
                 }//: VStack
                 .navigationTitle("News")
                 .background(Color.white)

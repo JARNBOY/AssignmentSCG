@@ -18,37 +18,44 @@ public struct RowNewsView: View {
     
     //MARK: BODY
     public var body: some View {
-        VStack(alignment: alignment,spacing: 8) {
+        HStack {
+            VStack(alignment: alignment,spacing: 8) {
+                
+                //MARK: ImageNewsView
+                ImageNewsView(
+                    contentMode: .fit,
+                    maxHeight: maxRowImageHight,
+                    urlString: article.urlToImage ?? ""
+                )
+                .cornerRadius(10)
+                
+                //MARK: Title
+                Text(article.title ?? "")
+                    .modifier(TitleModifier())
+                    .padding(.top)
+                    .opacity(isAnimating ? 1 : 0)
+                
+                //MARK: Desc
+                Text(article.description ?? "")
+                    .modifier(DsecModifier())
+                    .lineLimit(isDescLimitLine ? limitLineDescText : nil)
+                    .opacity(isAnimating ? 1 : 0)
+                
+                //MARK: Date
+                Text("Updated: \((article.publishedAt ?? "").toDateNewsDisplay())")
+                    .modifier(DateTextModifier())
+                    .opacity(isAnimating ? 1 : 0)
+                
+                
+                Divider()
+                    .padding(.vertical)
+            }//: VStack
             
-            //MARK: ImageNewsView
-            ImageNewsView(
-                contentMode: .fit,
-                maxHeight: maxRowImageHight,
-                urlString: article.urlToImage ?? ""
-            )
-            .cornerRadius(10)
-            
-            //MARK: Title
-            Text(article.title ?? "")
-                .modifier(TitleModifier())
-                .padding(.top)
-                .opacity(isAnimating ? 1 : 0)
-            
-            //MARK: Desc
-            Text(article.description ?? "")
-                .modifier(DsecModifier())
-                .lineLimit(isDescLimitLine ? limitLineDescText : nil)
-                .opacity(isAnimating ? 1 : 0)
-            
-            //MARK: Date
-            Text("Updated: \((article.publishedAt ?? "").toDateNewsDisplay())")
-                .modifier(DateTextModifier())
-                .opacity(isAnimating ? 1 : 0)
-            
-            
-            Divider()
-                .padding(.vertical)
+            Image(systemName: "chevron.forward")
+                .fontWeight(.bold)
+                .foregroundColor(.accentColor)
         }
+        
         .padding()
         .onAppear {
             isAnimating.toggle()
