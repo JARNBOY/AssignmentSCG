@@ -25,22 +25,20 @@ struct DailyNewsView: View {
                     
                     Spacer()
                     
-                    if let news = vm.news {
-                        //MARK: ListDailyNewsView
-                        ForEach(news.articles, id: \.title) { article in
-                            
-                            NavigationLink(destination: DetailNewsView(article: article)
-                                .hideNavigationBarBsforeDestinationViewLink()
-                            ) {
-                                RowNewsView( article: article )
-                                    .frame(height: CGFloat(heightFrameRowNews))
-                                
-                            }
-                        }//: ForEach
-                    } else {
-                        //MARK: EmptyAndRetryView
-                        SpaceTextScaleView()
-                    }
+                    //MARK: ListDailyNewsView
+                    ForEach(vm.articles, id: \.id) { article in
+                        
+                        NavigationLink(destination: DetailNewsView(article: article)
+                            .hideNavigationBarBsforeDestinationViewLink()
+                        ) {
+                            RowNewsView( article: article )
+                                .onAppear {
+                                    Task {
+                                        await vm.requestNews(currentArticle: vm.articles.isEmpty ? nil : article)
+                                    }
+                                }
+                        }
+                    }//: ForEach
                 }//: VStack
                 .navigationTitle("News")
                 .background(Color.white)
@@ -50,15 +48,6 @@ struct DailyNewsView: View {
                 })
                 .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
                     self.scrollPosition = value
-                    
-                    vm.isLastArticlesRow(currentOffsetY: scrollPosition.y)
-//                    print("currentArticle: \(value)")
-                    
-//                    if vm.isLoadNextPage {
-//                        Task {
-//                            await vm.requestNextPageNews()
-//                        }
-//                    }
                 }
             }//: ScrollView
             .background(Color("GreenAppThemeColor"))
@@ -71,8 +60,10 @@ struct DailyNewsView: View {
             
         }//: NavigationView
         .edgesIgnoringSafeArea(.all)
-        .task {
-            await vm.requestNews()
+        .onAppear {
+            Task {
+                await vm.requestNews(currentArticle: nil)
+            }
         }
         
         

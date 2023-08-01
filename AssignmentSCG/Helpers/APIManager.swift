@@ -55,6 +55,13 @@ class APIManager {
 
 }
 
+enum LoadStatus {
+    case ready (nextPage: Int)
+    case loading (page: Int)
+    case parseError
+    case done
+}
+
 enum ErrorType: LocalizedError {
     case custom(error: Error)
     case failedToResponse

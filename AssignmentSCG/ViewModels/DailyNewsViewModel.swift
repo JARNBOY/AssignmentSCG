@@ -9,25 +9,25 @@ import Foundation
 
 //MARK: ViewModel Interface
 protocol DailyNewsViewModelInterface {
-    func requestNews() async
-    func requestNextPageNews() async
+    
+    var rowStartIndex: Int { get }
+    var rowEndIndex: Int { get }
+    
+    func requestNews(currentArticle: Article?) async
     func refreshNews() async
     func clearPage()
-    func isLastArticlesRow(currentOffsetY: CGFloat)
-//    func isLastRow(currentArticle: Article)
+    func isShouldLoadMoreData(currentArticle: Article?) -> Bool
 //    func combineRequest(endpoint: String)
+    
 }
 
 //MARK: ViewModel - Property
 @MainActor class DailyNewsViewModel: ObservableObject {
-    @Published var news: NewsModel? = nil
-    @Published var isLoadNextPage: Bool = false
-    @Published var hasError = false
+    @Published var articles: [Article] = []
     @Published var error: ErrorType? = nil
     
     private var service: NewsService
-    private var page: Int = 1
-    private var maxPage: Int? = nil
+    var loadStatus = LoadStatus.ready(nextPage: 1)
     
     init(service: NewsService = DailyNewsService()) {
         self.service = service
@@ -37,33 +37,54 @@ protocol DailyNewsViewModelInterface {
 
 //MARK: ViewModel - Modify Interface
 extension DailyNewsViewModel: DailyNewsViewModelInterface {
+    var rowStartIndex: Int {
+        return articles.isEmpty ? -1 : articles.startIndex
+        
+    }
+    var rowEndIndex: Int {
+        return articles.isEmpty ? -1 : articles.endIndex
+    }
     
-    func requestNews() async {
+    func requestNews(currentArticle: Article?) async {
+        
+        
         do {
-            isLoadNextPage = false
-            hasError = false
+            
+            if !isShouldLoadMoreData(currentArticle: currentArticle) {
+                return
+            }
+            guard case let .ready(page) = loadStatus else {
+                return
+            }
+            
+            loadStatus = .loading(page: page)
+            
             //request
             let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam)&page=\(page)")
             
             //condition append new data
             guard  newsData.status == StatusType.ok.rawValue else {
                 self.error = ErrorType.failedUnknown
+                loadStatus = .done
                 return
             }
             
-            guard var news = news else {
-                self.news = newsData
-                return
-            }
-            
-            if newsData.articles.isEmpty {
-                self.maxPage = page
+            //initial set data value for update UI
+            if self.articles.isEmpty {
+                self.articles = newsData.articles
             } else {
-                news.articles += newsData.articles
+                self.articles += newsData.articles
+            }
+            
+            //set condition case infinite load by enum loadStatus
+            if newsData.articles.isEmpty {
+                loadStatus = .done
+            } else {
+                loadStatus = .ready(nextPage: page + 1)
             }
             
         } catch (let error) {
-            hasError = true
+            loadStatus = .parseError
             if let err = error as? ErrorType {
                 self.error = err
             } else {
@@ -72,49 +93,26 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
         }
     }
     
-    func requestNextPageNews() async  {
-        //check 'newsData.status == StatusType.ok.rawValue && newsData.articles.isEmpty'
-        if let maxPage = self.maxPage {
-            if page == maxPage {
-                return
-            }
+    func isShouldLoadMoreData(currentArticle: Article?) -> Bool {
+        guard let currentArticle = currentArticle else {
+            return true
         }
         
-        //request next
-        self.page += 1
-        await requestNews()
+        return currentArticle.id == articles[rowEndIndex - 1].id
     }
     
     func refreshNews() async {
-        news = nil
         clearPage()
-        await requestNews()
+        await requestNews(currentArticle: nil)
     }
     
     func clearPage() {
-        self.page = 1
-        self.maxPage = nil
-        self.isLoadNextPage = false
+        self.articles = []
+        self.loadStatus = LoadStatus.ready(nextPage: 1)
+        self.error = nil
     }
     
-    func isLastArticlesRow(currentOffsetY: CGFloat) {
-        if let news = news {
-            let articles = news.articles
-            
-            if articles.isEmpty {
-                isLoadNextPage = false
-            } else {
-                let allHeightSize = articles.count * heightFrameRowNews
-                let diffSpace = 800
-                let minusHeigh = -(allHeightSize - diffSpace)
-                print(isLoadNextPage)
-                print("scrollPosition: \(allHeightSize), minusHeigh: \(minusHeigh) \n \(currentOffsetY) < \(CGFloat(minusHeigh))")
-                isLoadNextPage = currentOffsetY < CGFloat(minusHeigh)
-            }
-        } else {
-            isLoadNextPage = false
-        }
-    }
+    
     
 //    func combineRequest(endpoint: String) {
 //        guard let url = URL(string: endpoint) else {
@@ -133,7 +131,6 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
 //
 //                switch res {
 //                case .failure(let error):
-//                    self.hasError
 //                    self.error = ErrorType.custom(error: error)
 //                default: break
 //                }
