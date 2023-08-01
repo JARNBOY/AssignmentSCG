@@ -10,7 +10,7 @@ import SwiftUI
 struct SearchView: View {
     //MARK: PROPERTY
     @Binding var searchText: String
-    
+    @Binding var isTextFieldDidEndEditing: Bool
     //MARK: BODY
     var body: some View {
         HStack {
@@ -20,7 +20,14 @@ struct SearchView: View {
                     .foregroundColor(.gray)
                     .padding(.leading, 4)
 
-                TextField("Placeholder", text: $searchText)
+                TextField(
+                    "Placeholder",
+                    text: $searchText,
+                    onCommit: {
+                        self.isTextFieldDidEndEditing.toggle()
+                    }
+                )
+                    
             }//: HStack
             .frame(height: 40)
             .padding(.vertical, 4)
@@ -36,7 +43,11 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         @State var searchText: String = ""
+        @State var isTextFieldDidEndEditing: Bool = false
         
-        SearchView(searchText: $searchText)
+        SearchView(
+            searchText: $searchText,
+            isTextFieldDidEndEditing: $isTextFieldDidEndEditing
+        )
     }
 }

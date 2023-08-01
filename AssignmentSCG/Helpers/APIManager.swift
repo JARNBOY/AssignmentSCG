@@ -69,6 +69,7 @@ enum ErrorType: LocalizedError {
     case failedInvalidURL
     case failedNilData
     case failedUnknown
+    case failedLimitRequest
     case failedRequest(httpResponse: HTTPURLResponse)
     
     var errorDescription: String? {
@@ -88,6 +89,8 @@ enum ErrorType: LocalizedError {
             return "Response is nil data"
         case .failedUnknown:
             return "Failed Unknown"
+        case .failedLimitRequest:
+            return "Failed Limited Request"
         }
     }
 }

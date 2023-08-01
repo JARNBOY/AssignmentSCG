@@ -10,6 +10,7 @@ import SwiftUI
 struct DailyNewsView: View {
     //MARK: PROPERTY
     @State private var searchText: String = ""
+    @State private var isTextFieldDidEndEditing: Bool = false
     @State private var scrollPosition: CGPoint = .zero
     @StateObject private var vm = DailyNewsViewModel()
     
@@ -21,7 +22,19 @@ struct DailyNewsView: View {
                 
                 VStack {
                     //MARK: SearchView
-                    SearchView(searchText: $searchText)
+                    SearchView(
+                        searchText: $searchText,
+                        isTextFieldDidEndEditing: $isTextFieldDidEndEditing
+                    )
+                    .onSubmit {
+                        Task {
+                            if isTextFieldDidEndEditing {
+                                await vm.searchNews(searchText: searchText)
+                            }
+                        }
+                        
+                    }
+                    
                     
                     Spacer()
                     

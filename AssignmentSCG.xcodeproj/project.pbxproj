@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FB8E3C0E2A788FEB005A87EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8E3C0D2A788FEB005A87EA /* DateExtension.swift */; };
 		FB8E3C102A788FF6005A87EA /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8E3C0F2A788FF6005A87EA /* StringExtension.swift */; };
+		FB8F45DC2A79659600B4FAA9 /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F45DB2A79659600B4FAA9 /* NewsService.swift */; };
 		FB94604A2A77AC7A0055E708 /* AssignmentSCGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9460492A77AC7A0055E708 /* AssignmentSCGApp.swift */; };
 		FB94604C2A77AC7A0055E708 /* DailyNewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB94604B2A77AC7A0055E708 /* DailyNewsView.swift */; };
 		FB94604E2A77AC7C0055E708 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB94604D2A77AC7C0055E708 /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		FB8E3C0D2A788FEB005A87EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		FB8E3C0F2A788FF6005A87EA /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		FB8F45DB2A79659600B4FAA9 /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
 		FB9460462A77AC790055E708 /* AssignmentSCG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssignmentSCG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB9460492A77AC7A0055E708 /* AssignmentSCGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentSCGApp.swift; sourceTree = "<group>"; };
 		FB94604B2A77AC7A0055E708 /* DailyNewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyNewsView.swift; sourceTree = "<group>"; };
@@ -65,6 +67,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB8F45DA2A79657D00B4FAA9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FB8F45DB2A79659600B4FAA9 /* NewsService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		FB94603D2A77AC790055E708 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +98,7 @@
 				FB9460642A77B1250055E708 /* ComponentViews */,
 				FB9460582A77AC890055E708 /* ViewModels */,
 				FB9460612A77AD500055E708 /* Models */,
+				FB8F45DA2A79657D00B4FAA9 /* Services */,
 				FB9460592A77AC910055E708 /* Helpers */,
 				FB9460662A77B2680055E708 /* Modify */,
 				FB9976B02A78049F006804CA /* Extension */,
@@ -248,6 +259,7 @@
 				FB94605B2A77ACC40055E708 /* APIManager.swift in Sources */,
 				FB9460742A77C4260055E708 /* DsecModifier.swift in Sources */,
 				FB94606C2A77C0CA0055E708 /* SearchView.swift in Sources */,
+				FB8F45DC2A79659600B4FAA9 /* NewsService.swift in Sources */,
 				FB9976B62A780D05006804CA /* MockDataPreview.swift in Sources */,
 				FB94604C2A77AC7A0055E708 /* DailyNewsView.swift in Sources */,
 				FB9460722A77C3700055E708 /* TitleModifier.swift in Sources */,

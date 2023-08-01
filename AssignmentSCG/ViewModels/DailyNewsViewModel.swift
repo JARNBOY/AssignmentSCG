@@ -16,6 +16,7 @@ protocol DailyNewsViewModelInterface {
     
     
     func requestNews(currentArticle: Article?) async
+    func searchNews(searchText: String?) async
     func refreshNews() async
     func clearPage()
     func isShouldLoadMoreData(currentArticle: Article?) -> Bool
@@ -39,7 +40,7 @@ protocol DailyNewsViewModelInterface {
     
 }
 
-//MARK: ViewModel - Modify Interface
+//MARK: ViewModel - Modify Extension Interface
 extension DailyNewsViewModel: DailyNewsViewModelInterface {
     var rowStartIndex: Int {
         return articles.isEmpty ? -1 : articles.startIndex
@@ -51,6 +52,49 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
     
     var lastRowArticle: Article {
         return articles[rowEndIndex]
+    }
+    
+    func searchNews(searchText: String?) async {
+        
+        do {
+            
+            guard let searchText = searchText else {
+                return
+            }
+            
+            //request
+            let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam)&q=\(searchText)")
+            
+            //condition append new data
+            guard  newsData.status == StatusType.ok.rawValue else {
+                if newsData.status == StatusType.error.rawValue {
+                    self.error = ErrorType.failedLimitRequest
+                } else {
+                    self.error = ErrorType.failedUnknown
+                }
+                loadStatus = .done
+                return
+            }
+            
+            
+            //initial set data value for update UI alway new data
+            self.articles = newsData.articles
+            
+            //set condition case infinite load by enum loadStatus
+            loadStatus = .done
+            
+            //set case is Empty when call first time (case apiKey is over limit or empty response)
+            isEmptyNewsData = self.articles.isEmpty
+            
+            
+        } catch (let error) {
+            loadStatus = .parseError
+            if let err = error as? ErrorType {
+                self.error = err
+            } else {
+                self.error = ErrorType.failedUnknown
+            }
+        }
     }
     
     func requestNews(currentArticle: Article?) async {
@@ -72,7 +116,11 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
             
             //condition append new data
             guard  newsData.status == StatusType.ok.rawValue else {
-                self.error = ErrorType.failedUnknown
+                if newsData.status == StatusType.error.rawValue {
+                    self.error = ErrorType.failedLimitRequest
+                } else {
+                    self.error = ErrorType.failedUnknown
+                }
                 loadStatus = .done
                 return
             }
@@ -92,7 +140,7 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
                 loadStatus = .ready(nextPage: page + 1)
             }
             
-            //set case is Empty when call first time (case apiKey is over limit)
+            //set case is Empty when call first time (case apiKey is over limit or empty response)
             isEmptyNewsData = self.articles.isEmpty
             
             
@@ -167,28 +215,5 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
 //    }
 }
 
-//MARK: Service
-protocol NewsService {
-    func requestNews(url: String) async throws -> NewsModel
-}
 
-class DailyNewsService: NewsService {
-    
-    func requestNews(url: String) async throws -> NewsModel {
-        let data = try await APIManager.shared.request(endpoint: url, method: .get, headers: nil, body: nil)
-        
-        do {
-            let responseNewsDisplay = try JSONDecoder().decode(NewsModel.self, from: data)
-            print("ResponseNewsDisplay : \(responseNewsDisplay)")
-            return responseNewsDisplay
-        } catch (let error) {
-            print("Error decoding JSON: \(error)")
-            if let err = error as? ErrorType {
-                throw err
-            } else {
-                throw ErrorType.custom(error: error)
-            }
-        }
-    }
-}
 
