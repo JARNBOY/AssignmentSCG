@@ -58,7 +58,8 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
         
         do {
             
-            guard let searchText = searchText else {
+            guard let searchText = searchText , !searchText.isEmpty else {
+                await refreshNews()
                 return
             }
             
