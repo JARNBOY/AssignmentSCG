@@ -94,4 +94,5 @@ enum ErrorType: LocalizedError {
 
 enum StatusType: String {
     case ok = "ok"
+    case error = "error"
 }

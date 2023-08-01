@@ -46,3 +46,11 @@ let dataNewsMock: NewsModel = NewsModel(
 )
 
 let imageURLMock = "https://media.cnn.com/api/v1/images/stellar/prod/230729202313-02-moscow-city-drone-attack-0730.jpg?c=16x9&q=w_800,c_fill"
+
+let errorLimitResponseMock = """
+{
+    "status": "error",
+    "code": "rateLimited",
+    "message": "You have made too many requests recently. Developer accounts are limited to 100 requests over a 24 hour period (50 requests available every 12 hours). Please upgrade to a paid plan if you need more requests."
+}
+"""

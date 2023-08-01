@@ -68,7 +68,7 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
             loadStatus = .loading(page: page)
             
             //request
-            let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam02)&page=\(page)")
+            let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam)&page=\(page)")
             
             //condition append new data
             guard  newsData.status == StatusType.ok.rawValue else {
