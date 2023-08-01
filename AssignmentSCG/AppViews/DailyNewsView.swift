@@ -25,7 +25,7 @@ struct DailyNewsView: View {
                     //MARK: ListDailyNewsView
                     if let news = vm.news {
                         ForEach(news.articles, id: \.title) { article in
-                            NavigationLink(destination: DetailNewsView()
+                            NavigationLink(destination: DetailNewsView(article: article)
                                 .hideNavigationBarBsforeDestinationViewLink()
                             ) {
                                 RowNewsView(article: article)

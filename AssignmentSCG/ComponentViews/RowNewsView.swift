@@ -8,8 +8,6 @@
 import SwiftUI
 
 public struct RowNewsView: View {
-    
-    
     //MARK: PROPERTY
     private let alignment: HorizontalAlignment = .center
     private let isDescLimitLine: Bool = true

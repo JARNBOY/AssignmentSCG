@@ -11,6 +11,8 @@ struct DetailNewsView: View {
     //MARK: PROPERTY
     @Environment(\.presentationMode) var presentationMode
     
+    @State var article: Article
+    
     //MARK: BODY
     var body: some View {
         NavigationView {
@@ -20,23 +22,23 @@ struct DetailNewsView: View {
                     //MARK: ImageNewsView
                     ImageNewsView(
                         contentMode: .fill,
-                        maxHeight: maxDetailImageHight,
-                        urlString: imageURLMock
+                        maxHeight: maxRowImageHight,
+                        urlString: article.urlToImage
                     )
                     
                     //MARK: Title
-                    Text("Ukrainian drones intercepted across Russia, military says - CNN")
+                    Text(article.title)
                         .modifier(TitleModifier())
                         .padding(.top)
                         .padding(.horizontal)
                     
                     //MARK: Desc
-                    Text("Three drones were intercepted in “Moscow City” in an attempted attack on Sunday on the business and shopping development in the west of the Russian capital, Russia’s Ministry of Defense said.")
+                    Text(article.description)
                         .modifier(DsecModifier())
                         .padding(.horizontal)
                     
                     //MARK: Date
-                    Text("Updated: Dec 07, 03:04")
+                    Text("Updated: \(article.publishedAt.toDateNewsDisplay())")
                         .modifier(DateTextModifier())
                     
                     //MARK: Spacer White Bottom
@@ -49,7 +51,7 @@ struct DetailNewsView: View {
                 .background(.white)
                 
             }//: ScrollView
-            
+            .padding(.top, 4)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     
@@ -72,6 +74,6 @@ struct DetailNewsView: View {
 
 struct DetailNewsView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailNewsView()
+        DetailNewsView(article: dataArticleMock)
     }
 }
