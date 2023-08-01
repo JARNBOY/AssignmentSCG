@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct NewsModel: Codable {
+struct NewsModel: Decodable {
     var status: String?
     var totalResults: Int?
     var articles: [Article] = []
 }
 
-struct Article: Codable, Equatable {
+struct Article: Decodable, Equatable {
     var title: String?
     var description: String?
     var urlToImage: String?

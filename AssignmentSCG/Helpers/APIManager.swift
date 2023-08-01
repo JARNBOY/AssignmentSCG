@@ -52,6 +52,7 @@ class APIManager {
             throw ErrorType.failedRequest(httpResponse: httpResponse)
         }
     }
+
 }
 
 enum ErrorType: LocalizedError {

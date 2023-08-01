@@ -40,6 +40,7 @@ struct DetailNewsView: View {
                     //MARK: Date
                     Text("Updated: \((article.publishedAt ?? "").toDateNewsDisplay())")
                         .modifier(DateTextModifier())
+                        .padding(.horizontal)
                     
                     //MARK: Spacer White Bottom
                     SpaceTextScaleView()

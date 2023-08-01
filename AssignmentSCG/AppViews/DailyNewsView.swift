@@ -10,7 +10,6 @@ import SwiftUI
 struct DailyNewsView: View {
     //MARK: PROPERTY
     @State private var searchText: String = ""
-    @State private var point: CGSize = CGSize()
     @State private var scrollPosition: CGPoint = .zero
     @StateObject private var vm = DailyNewsViewModel()
     
@@ -33,7 +32,9 @@ struct DailyNewsView: View {
                             NavigationLink(destination: DetailNewsView(article: article)
                                 .hideNavigationBarBsforeDestinationViewLink()
                             ) {
-                                RowNewsView(article: article)
+                                RowNewsView( article: article )
+                                    .frame(height: CGFloat(heightFrameRowNews))
+                                
                             }
                         }//: ForEach
                     } else {
@@ -49,20 +50,31 @@ struct DailyNewsView: View {
                 })
                 .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
                     self.scrollPosition = value
-                    print("scrollPosition: \(scrollPosition)")
                     
+                    vm.isLastArticlesRow(currentOffsetY: scrollPosition.y)
+//                    print("currentArticle: \(value)")
+                    
+//                    if vm.isLoadNextPage {
+//                        Task {
+//                            await vm.requestNextPageNews()
+//                        }
+//                    }
                 }
-                
             }//: ScrollView
             .background(Color("GreenAppThemeColor"))
             .coordinateSpace(name: "scroll")
-            
+            .refreshable {
+                Task {
+                    await vm.refreshNews()
+                }
+            }
             
         }//: NavigationView
         .edgesIgnoringSafeArea(.all)
         .task {
             await vm.requestNews()
         }
+        
         
     }
 }

@@ -13,12 +13,15 @@ protocol DailyNewsViewModelInterface {
     func requestNextPageNews() async
     func refreshNews() async
     func clearPage()
-    func isLastArticlesRow(currentArticle: Article) -> Bool
+    func isLastArticlesRow(currentOffsetY: CGFloat)
+//    func isLastRow(currentArticle: Article)
+//    func combineRequest(endpoint: String)
 }
 
 //MARK: ViewModel - Property
 @MainActor class DailyNewsViewModel: ObservableObject {
     @Published var news: NewsModel? = nil
+    @Published var isLoadNextPage: Bool = false
     @Published var hasError = false
     @Published var error: ErrorType? = nil
     
@@ -37,9 +40,8 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
     
     func requestNews() async {
         do {
-            
+            isLoadNextPage = false
             hasError = false
-            
             //request
             let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam)&page=\(page)")
             
@@ -84,6 +86,7 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
     }
     
     func refreshNews() async {
+        news = nil
         clearPage()
         await requestNews()
     }
@@ -91,19 +94,55 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
     func clearPage() {
         self.page = 1
         self.maxPage = nil
+        self.isLoadNextPage = false
     }
     
-    func isLastArticlesRow(currentArticle: Article) -> Bool {
+    func isLastArticlesRow(currentOffsetY: CGFloat) {
         if let news = news {
             let articles = news.articles
-            guard let index = articles.lastIndex(where: { $0.title == currentArticle.title }) else {
-              return false
+            
+            if articles.isEmpty {
+                isLoadNextPage = false
+            } else {
+                let allHeightSize = articles.count * heightFrameRowNews
+                let diffSpace = 800
+                let minusHeigh = -(allHeightSize - diffSpace)
+                print(isLoadNextPage)
+                print("scrollPosition: \(allHeightSize), minusHeigh: \(minusHeigh) \n \(currentOffsetY) < \(CGFloat(minusHeigh))")
+                isLoadNextPage = currentOffsetY < CGFloat(minusHeigh)
             }
-            return index == articles.count - 1
         } else {
-            return false
+            isLoadNextPage = false
         }
     }
+    
+//    func combineRequest(endpoint: String) {
+//        guard let url = URL(string: endpoint) else {
+//            self.error = ErrorType.failedInvalidURL
+//            return
+//        }
+//
+//        URLSession.shared
+//            .dataTaskPublisher(for: url)
+//            .receive(on: DispatchQueue.main)
+//            .flatMap(maxPublishers: .max(1)) { data in
+//
+//            }
+//            .decode(type: NewsModel.self, decoder: JSONDecoder())
+//            .sink { res in
+//
+//                switch res {
+//                case .failure(let error):
+//                    self.hasError
+//                    self.error = ErrorType.custom(error: error)
+//                default: break
+//                }
+//
+//            } receiveValue: { [weak self] newsModel in
+//                self?.news = newsModel
+//            }
+//
+//    }
 }
 
 //MARK: Service

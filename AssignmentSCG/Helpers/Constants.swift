@@ -10,6 +10,7 @@ import SwiftUI
 
 //MARK: View property
 var limitLineDescText: Int = 6
+let heightFrameRowNews: Int = 500
 var maxRowImageHight: CGFloat = 200
 var maxDetailImageHight: CGFloat = 360
 let formatDateTime = "yyyy-MM-dd'T'HH:mm:ssZ"
