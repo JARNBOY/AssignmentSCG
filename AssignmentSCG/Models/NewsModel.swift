@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct NewsModel: Codable {
-    let status: String
-    let totalResults: Int
-    var articles: [Article]
+    var status: String?
+    var totalResults: Int?
+    var articles: [Article] = []
 }
 
-struct Article: Codable {
-    let title: String
-    let description: String
-    let urlToImage: String
-    let publishedAt: String
+struct Article: Codable, Equatable {
+    var title: String?
+    var description: String?
+    var urlToImage: String?
+    var publishedAt: String?
 }

@@ -23,22 +23,22 @@ public struct RowNewsView: View {
             ImageNewsView(
                 contentMode: .fit,
                 maxHeight: maxRowImageHight,
-                urlString: article.urlToImage
+                urlString: article.urlToImage ?? ""
             )
                 .cornerRadius(10)
             
             //MARK: Title
-            Text(article.title)
+            Text(article.title ?? "")
                 .modifier(TitleModifier())
                 .padding(.top)
             
             //MARK: Desc
-            Text(article.description)
+            Text(article.description ?? "")
                 .modifier(DsecModifier())
                 .lineLimit(isDescLimitLine ? limitLineDescText : nil)
             
             //MARK: Date
-            Text("Updated: \(article.publishedAt.toDateNewsDisplay())")
+            Text("Updated: \((article.publishedAt ?? "").toDateNewsDisplay())")
                 .modifier(DateTextModifier())
             
             

@@ -38,6 +38,10 @@ class APIManager {
         
         let (data, response) = try await session.data(for: request)
         
+        print("Request : \(request)")
+        print("Data : \(data)")
+        print("Response : \(response)")
+        
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ErrorType.failedToResponse
         }

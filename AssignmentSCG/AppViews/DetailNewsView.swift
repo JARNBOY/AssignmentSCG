@@ -23,22 +23,22 @@ struct DetailNewsView: View {
                     ImageNewsView(
                         contentMode: .fill,
                         maxHeight: maxRowImageHight,
-                        urlString: article.urlToImage
+                        urlString: article.urlToImage ?? ""
                     )
                     
                     //MARK: Title
-                    Text(article.title)
+                    Text(article.title ?? "")
                         .modifier(TitleModifier())
                         .padding(.top)
                         .padding(.horizontal)
                     
                     //MARK: Desc
-                    Text(article.description)
+                    Text(article.description ?? "")
                         .modifier(DsecModifier())
                         .padding(.horizontal)
                     
                     //MARK: Date
-                    Text("Updated: \(article.publishedAt.toDateNewsDisplay())")
+                    Text("Updated: \((article.publishedAt ?? "").toDateNewsDisplay())")
                         .modifier(DateTextModifier())
                     
                     //MARK: Spacer White Bottom

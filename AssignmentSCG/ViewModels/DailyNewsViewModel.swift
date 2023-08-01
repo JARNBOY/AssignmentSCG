@@ -7,13 +7,16 @@
 
 import Foundation
 
-//MARK: ViewModel
+//MARK: ViewModel Interface
 protocol DailyNewsViewModelInterface {
     func requestNews() async
     func requestNextPageNews() async
     func refreshNews() async
-    private func clearPage()
+    func clearPage()
+    func isLastArticlesRow(currentArticle: Article) -> Bool
 }
+
+//MARK: ViewModel - Property
 @MainActor class DailyNewsViewModel: ObservableObject {
     @Published var news: NewsModel? = nil
     @Published var hasError = false
@@ -29,7 +32,9 @@ protocol DailyNewsViewModelInterface {
     
 }
 
+//MARK: ViewModel - Modify Interface
 extension DailyNewsViewModel: DailyNewsViewModelInterface {
+    
     func requestNews() async {
         do {
             
@@ -39,14 +44,20 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
             let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam)&page=\(page)")
             
             //condition append new data
-            if news != nil {
-                if newsData.status == StatusType.ok.rawValue && !newsData.articles.isEmpty {
-                    self.news?.articles += newsData.articles
-                } else if newsData.status == StatusType.ok.rawValue && newsData.articles.isEmpty {
-                    self.maxPage = page
-                }
-            } else {
+            guard  newsData.status == StatusType.ok.rawValue else {
+                self.error = ErrorType.failedUnknown
+                return
+            }
+            
+            guard var news = news else {
                 self.news = newsData
+                return
+            }
+            
+            if newsData.articles.isEmpty {
+                self.maxPage = page
+            } else {
+                news.articles += newsData.articles
             }
             
         } catch (let error) {
@@ -77,9 +88,21 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
         await requestNews()
     }
     
-    internal func clearPage() {
+    func clearPage() {
         self.page = 1
         self.maxPage = nil
+    }
+    
+    func isLastArticlesRow(currentArticle: Article) -> Bool {
+        if let news = news {
+            let articles = news.articles
+            guard let index = articles.lastIndex(where: { $0.title == currentArticle.title }) else {
+              return false
+            }
+            return index == articles.count - 1
+        } else {
+            return false
+        }
     }
 }
 
@@ -95,7 +118,7 @@ class DailyNewsService: NewsService {
         
         do {
             let responseNewsDisplay = try JSONDecoder().decode(NewsModel.self, from: data)
-            print(responseNewsDisplay)
+            print("ResponseNewsDisplay : \(responseNewsDisplay)")
             return responseNewsDisplay
         } catch (let error) {
             print("Error decoding JSON: \(error)")
