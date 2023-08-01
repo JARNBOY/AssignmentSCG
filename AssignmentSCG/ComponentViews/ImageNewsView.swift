@@ -11,12 +11,13 @@ struct ImageNewsView: View {
     //MARK: PROPERTY
     var contentMode: ContentMode
     var maxHeight: CGFloat
+    var urlString: String
     
     //MARK: BODY
     
     var body: some View {
         AsyncImage(
-            url: URL(string: "https://media.cnn.com/api/v1/images/stellar/prod/230729202313-02-moscow-city-drone-attack-0730.jpg?c=16x9&q=w_800,c_fill"),
+            url: URL(string: urlString),
             content: { image in
                 image.resizable()
                     .aspectRatio(contentMode: contentMode)
@@ -31,6 +32,6 @@ struct ImageNewsView: View {
 
 struct ImageNewsView_Previews: PreviewProvider {
     static var previews: some View {
-        ImageNewsView(contentMode: .fill, maxHeight: 200)
+        ImageNewsView(contentMode: .fill, maxHeight: 200, urlString: imageURLMock)
     }
 }

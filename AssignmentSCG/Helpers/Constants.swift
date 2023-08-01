@@ -12,6 +12,8 @@ import SwiftUI
 var limitLineDescText: Int = 6
 var maxRowImageHight: CGFloat = 200
 var maxDetailImageHight: CGFloat = 360
+let formatDateTime = "yyyy-MM-dd'T'HH:mm:ssZ"
+let formatDateNewsDisplay = "MMM-dd, HH:mm"
 
 //MARK: View function
 func setNavigationThemeColor() {

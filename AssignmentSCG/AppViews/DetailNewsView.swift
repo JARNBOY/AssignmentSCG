@@ -18,7 +18,11 @@ struct DetailNewsView: View {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     //MARK: ImageNewsView
-                    ImageNewsView(contentMode: .fill, maxHeight: maxDetailImageHight)
+                    ImageNewsView(
+                        contentMode: .fill,
+                        maxHeight: maxDetailImageHight,
+                        urlString: imageURLMock
+                    )
                     
                     //MARK: Title
                     Text("Ukrainian drones intercepted across Russia, military says - CNN")

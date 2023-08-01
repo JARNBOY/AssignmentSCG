@@ -7,34 +7,40 @@
 
 import SwiftUI
 
-struct RowNewsView: View {
-    //MARK: PROPERTY
-    private var alignment: HorizontalAlignment = .center
-    private var isDescLimitLine: Bool = true
-    private var isDetailView: Bool = true
+public struct RowNewsView: View {
     
-//    @Binding var isTapOpenDetailView: Bool?
+    
+    //MARK: PROPERTY
+    private let alignment: HorizontalAlignment = .center
+    private let isDescLimitLine: Bool = true
+    private let isDetailView: Bool = true
+    
+    @State var article: Article
     
     //MARK: BODY
-    var body: some View {
+    public var body: some View {
         VStack(alignment: alignment,spacing: 8) {
             
             //MARK: ImageNewsView
-            ImageNewsView(contentMode: .fit, maxHeight: maxRowImageHight)
+            ImageNewsView(
+                contentMode: .fit,
+                maxHeight: maxRowImageHight,
+                urlString: article.urlToImage
+            )
                 .cornerRadius(10)
             
             //MARK: Title
-            Text("Ukrainian drones intercepted across Russia, military says - CNN")
+            Text(article.title)
                 .modifier(TitleModifier())
                 .padding(.top)
             
             //MARK: Desc
-            Text("Three drones were intercepted in “Moscow City” in an attempted attack on Sunday on the business and shopping development in the west of the Russian capital, Russia’s Ministry of Defense said.")
+            Text(article.description)
                 .modifier(DsecModifier())
                 .lineLimit(isDescLimitLine ? limitLineDescText : nil)
             
             //MARK: Date
-            Text("Updated: Dec 07, 03:04")
+            Text("Updated: \(article.publishedAt.toDateNewsDisplay())")
                 .modifier(DateTextModifier())
             
             
@@ -48,6 +54,6 @@ struct RowNewsView: View {
 
 struct NewsView_Previews: PreviewProvider {
     static var previews: some View {
-        RowNewsView()
+        RowNewsView(article: dataArticleMock)
     }
 }

@@ -28,7 +28,7 @@ struct DailyNewsView: View {
                             NavigationLink(destination: DetailNewsView()
                                 .hideNavigationBarBsforeDestinationViewLink()
                             ) {
-                                RowNewsView()
+                                RowNewsView(article: article)
                             }
                         }
                     } else {
