@@ -58,7 +58,7 @@ public struct RowNewsView: View {
         
         .padding()
         .onAppear {
-            isAnimating.toggle()
+            isAnimating = true
         }
     }
 }
