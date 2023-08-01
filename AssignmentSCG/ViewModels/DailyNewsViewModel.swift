@@ -10,22 +10,45 @@ import Foundation
 //MARK: ViewModel
 protocol DailyNewsViewModelInterface {
     func requestNews() async
+    func requestNextPageNews() async
+    func refreshNews() async
+    private func clearPage()
 }
-@MainActor class DailyNewsViewModel: DailyNewsViewModelInterface, ObservableObject {
+@MainActor class DailyNewsViewModel: ObservableObject {
     @Published var news: NewsModel? = nil
     @Published var hasError = false
     @Published var error: ErrorType? = nil
     
-    var service: NewsService
-    
+    private var service: NewsService
+    private var page: Int = 1
+    private var maxPage: Int? = nil
     
     init(service: NewsService = DailyNewsService()) {
         self.service = service
     }
     
+}
+
+extension DailyNewsViewModel: DailyNewsViewModelInterface {
     func requestNews() async {
         do {
-            self.news = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?country=us&apiKey=0bfb7217d29740c3a8ca13fda1c95a49&page=1")
+            
+            hasError = false
+            
+            //request
+            let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam)&page=\(page)")
+            
+            //condition append new data
+            if news != nil {
+                if newsData.status == StatusType.ok.rawValue && !newsData.articles.isEmpty {
+                    self.news?.articles += newsData.articles
+                } else if newsData.status == StatusType.ok.rawValue && newsData.articles.isEmpty {
+                    self.maxPage = page
+                }
+            } else {
+                self.news = newsData
+            }
+            
         } catch (let error) {
             hasError = true
             if let err = error as? ErrorType {
@@ -34,7 +57,29 @@ protocol DailyNewsViewModelInterface {
                 self.error = ErrorType.failedUnknown
             }
         }
+    }
+    
+    func requestNextPageNews() async  {
+        //check 'newsData.status == StatusType.ok.rawValue && newsData.articles.isEmpty'
+        if let maxPage = self.maxPage {
+            if page == maxPage {
+                return
+            }
+        }
         
+        //request next
+        self.page += 1
+        await requestNews()
+    }
+    
+    func refreshNews() async {
+        clearPage()
+        await requestNews()
+    }
+    
+    internal func clearPage() {
+        self.page = 1
+        self.maxPage = nil
     }
 }
 

@@ -15,6 +15,10 @@ var maxDetailImageHight: CGFloat = 360
 let formatDateTime = "yyyy-MM-dd'T'HH:mm:ssZ"
 let formatDateNewsDisplay = "MMM-dd, HH:mm"
 
+//MARK: Param Endpoint Property
+let countryParam: String = "country=us"
+let apiKeyParam: String = "apiKey=0bfb7217d29740c3a8ca13fda1c95a49"
+
 //MARK: View function
 func setNavigationThemeColor() {
     UINavigationBar.appearance().barTintColor = UIColor(Color("GreenAppThemeColor"))

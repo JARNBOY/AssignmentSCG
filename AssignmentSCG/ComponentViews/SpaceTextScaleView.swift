@@ -91,7 +91,6 @@ struct SpaceTextScaleView: View {
                                                                 
                                                                 
         """)
-        .frame(width: .infinity, height: 1000)
     }
 }
 

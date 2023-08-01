@@ -22,8 +22,9 @@ struct DailyNewsView: View {
                     SearchView(searchText: $searchText)
                     
                     Spacer()
-                    //MARK: ListDailyNewsView
+                    
                     if let news = vm.news {
+                        //MARK: ListDailyNewsView
                         ForEach(news.articles, id: \.title) { article in
                             NavigationLink(destination: DetailNewsView(article: article)
                                 .hideNavigationBarBsforeDestinationViewLink()
@@ -33,6 +34,7 @@ struct DailyNewsView: View {
                         }
                     } else {
                         //MARK: EmptyAndRetryView
+                        SpaceTextScaleView()
                     }
                     
                     
@@ -41,6 +43,7 @@ struct DailyNewsView: View {
                 .background(Color.white)
             }//: ScrollView
             .background(Color("GreenAppThemeColor"))
+            
         }//: NavigationView
         .edgesIgnoringSafeArea(.all)
         .task {
