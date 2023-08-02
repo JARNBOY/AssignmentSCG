@@ -17,7 +17,12 @@ class MockDailyNewsService: NewsService {
         let data = try await APIManager.shared.request(endpoint: url, method: .get, headers: nil, body: nil)
         
         if isSuccess {
-            return error == .failedNilData ? NewsModel() : dataNewsMock
+            if error == .failedNilData {
+                throw error
+            } else {
+                return dataNewsMock
+            }
+            
         } else {
             throw error
         }
@@ -27,7 +32,11 @@ class MockDailyNewsService: NewsService {
         let data = try await APIManager.shared.request(endpoint: url, method: .get, headers: nil, body: nil)
         
         if isSuccess {
-            return error == .failedNilData ? NewsModel() : dataNewsMock
+            if error == .failedNilData {
+                throw error
+            } else {
+                return dataNewsMock
+            }
         } else {
             throw error
         }
