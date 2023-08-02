@@ -10,25 +10,55 @@ import SwiftUI
 struct SearchView: View {
     //MARK: PROPERTY
     @Binding var searchText: String
-    @Binding var isTextFieldDidEndEditing: Bool
+    @Binding var isRequestNewsSearch: Bool
+    
+    @FocusState private var searchTextFieldIsFocused: Bool
+    @StateObject var vm : DailyNewsViewModel
     
     //MARK: BODY
     var body: some View {
         HStack {
             HStack(spacing: 8) {
-                Image(systemName: "magnifyingglass")
-                    .frame(width: 20, height: 20, alignment: .leading)
-                    .foregroundColor(.gray)
-                    .padding(.leading, 4)
+                
+                //MARK: Search button
+                Button {
+                    Task {
+                        await vm.searchNews(searchText: searchText)
+                    }
+                    self.searchTextFieldIsFocused = false
+                } label: {
+                    Image(systemName: "magnifyingglass")
+                        .padding()
+                }//: Button
+                .foregroundColor(.gray)
+                .frame(width: 30)
 
+                //MARK: Textfield Search
                 TextField(
                     "Placeholder",
                     text: $searchText,
                     onCommit: {
-                        self.isTextFieldDidEndEditing.toggle()
+                        self.isRequestNewsSearch = true
                     }
-                )
-                    
+                )//: TextField
+                .focused($searchTextFieldIsFocused)
+                
+                //MARK: Clear Button
+                Button {
+                    self.searchText = ""
+                    self.searchTextFieldIsFocused = false
+                    Task {
+                        await vm.refreshNews()
+                    }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .padding()
+                        
+                }
+                .foregroundColor(.accentColor)
+                .padding(.all, 1)
+                .opacity(searchText.isEmpty ? 0 : 1)
+                .frame(width: searchText.isEmpty ? 0 : 30)
             }//: HStack
             .frame(height: 40)
             .padding(.vertical, 4)
@@ -44,11 +74,12 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         @State var searchText: String = ""
-        @State var isTextFieldDidEndEditing: Bool = false
+        @State var isRequestNewsSearch: Bool = false
         
         SearchView(
             searchText: $searchText,
-            isTextFieldDidEndEditing: $isTextFieldDidEndEditing
+            isRequestNewsSearch: $isRequestNewsSearch,
+            vm: DailyNewsViewModel()
         )
     }
 }
