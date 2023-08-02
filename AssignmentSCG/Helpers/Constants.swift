@@ -14,7 +14,7 @@ let heightFrameRowNews: Int = 500
 var maxRowImageHight: CGFloat = 200
 var maxDetailImageHight: CGFloat = 360
 let formatDateTime = "yyyy-MM-dd'T'HH:mm:ssZ"
-let formatDateNewsDisplay = "MMM-dd, HH:mm"
+let formatDateNewsDisplay = "MMM dd, HH:mm"
 
 //MARK: Param Endpoint Property
 let countryParam: String = "country=us"
