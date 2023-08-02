@@ -55,9 +55,9 @@ class APIManager {
 
 }
 
-enum LoadStatus {
+enum LoadStatus: Equatable {
     case ready (nextPage: Int)
-    case loading (page: Int)
+    case loading
     case parseError
     case done
 }

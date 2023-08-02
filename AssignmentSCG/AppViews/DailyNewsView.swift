@@ -47,6 +47,17 @@ struct DailyNewsView: View {
                         
                         //MARK: ListDailyNewsView
                         ListDailyNewsView(articles: vm.articles)
+                            .opacity( vm.loadStatus == LoadStatus.loading ? 0.7 : 1 )
+                            .animation(
+                                Animation
+                                .easeInOut
+                                , value: vm.loadStatus == LoadStatus.loading
+                            )
+                            .overlay {
+                                if vm.loadStatus == LoadStatus.loading {
+                                    ProgressView()
+                                }
+                            }
                         
                     }
                 }//: VStack

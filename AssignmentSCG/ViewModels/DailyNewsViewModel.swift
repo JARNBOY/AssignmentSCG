@@ -30,9 +30,9 @@ protocol DailyNewsViewModelInterface {
     @Published var articles: [Article] = []
     @Published var error: ErrorType? = nil
     @Published var isEmptyNewsData: Bool = false
+    @Published var loadStatus = LoadStatus.ready(nextPage: 1)
     
     private var service: NewsService
-    var loadStatus = LoadStatus.ready(nextPage: 1)
     
     init(service: NewsService = DailyNewsService()) {
         self.service = service
@@ -58,10 +58,14 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
         
         do {
             
+            
+            
             guard let searchText = searchText , !searchText.isEmpty else {
                 await refreshNews()
                 return
             }
+            
+            loadStatus = .loading
             
             //request
             let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam)&q=\(searchText)")
@@ -110,7 +114,7 @@ extension DailyNewsViewModel: DailyNewsViewModelInterface {
                 return
             }
             
-            loadStatus = .loading(page: page)
+            loadStatus = .loading
             
             //request
             let newsData: NewsModel = try await service.requestNews(url: "https://newsapi.org/v2/top-headlines?\(countryParam)&\(apiKeyParam)&page=\(page)")

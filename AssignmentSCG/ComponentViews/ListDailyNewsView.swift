@@ -11,6 +11,7 @@ struct ListDailyNewsView: View {
     //MARK: PROPERTY
     var articles: [Article]
     
+    
     //MARK: BODY
     var body: some View {
         ForEach(self.articles, id: \.id) { article in
@@ -28,14 +29,23 @@ struct ListDailyNewsView: View {
 struct ListDailyNewsView_Previews: PreviewProvider {
     static var previews: some View {
         @State var vm = DailyNewsViewModel()
+        @State var isLoading: Bool = false
         
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-//                    ListDailyNewsView(articles: dataNewsMock.articles)
-                    ListDailyNewsView(
-                        articles: []
-                    )
+                    ListDailyNewsView(articles: dataNewsMock.articles)
+                        .opacity( isLoading ? 0.7 : 1 )
+                        .animation(
+                            Animation
+                            .easeInOut(duration: 4)
+                            , value: isLoading
+                        )
+                        .overlay {
+                            if isLoading {
+                                ProgressView()
+                            }
+                        }
                 }
             }
         }
