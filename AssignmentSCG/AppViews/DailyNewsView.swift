@@ -17,7 +17,7 @@ struct DailyNewsView: View {
     //MARK: BODY
     var body: some View {
         NavigationView {
-            //use GeometryReader for find current row
+            
             ScrollView(.vertical, showsIndicators: false) {
                 
                 VStack {
@@ -35,21 +35,41 @@ struct DailyNewsView: View {
                         
                     }
                     
-                    
                     Spacer()
                     
-                    //MARK: ListDailyNewsView
-                    ListDailyNewsView(articles: vm.articles)
-                    
-                    //MARK: EmptyRetryView
-                    
+                    if $vm.articles.isEmpty {
+                        
+                        if let error = vm.error {
+                            
+                            //MARK: RetryView
+                            RetryView(errorDescription: error.errorDescription ?? "")
+                                .onTapGesture {
+                                    Task {
+                                        await vm.refreshNews()
+                                    }
+                                }
+                            
+                        } else {
+                            
+                            //MARK: EmptyDataView
+                            EmptyDataView()
+                        }
+                    } else {
+                        
+                        //MARK: ListDailyNewsView
+                        ListDailyNewsView(articles: vm.articles)
+                        
+                    }
                 }//: VStack
                 .navigationTitle("News")
                 .background(Color.white)
-                .background(GeometryReader { geometry in
-                    Color.clear
-                        .preference(key: ScrollOffsetPreferenceKey.self, value: geometry.frame(in: .named("scroll")).origin)
-                })
+                .background(
+                    //use GeometryReader for find current row
+                    GeometryReader { geometry in
+                        Color.clear
+                            .preference(key: ScrollOffsetPreferenceKey.self, value: geometry.frame(in: .named("scroll")).origin)
+                    }
+                )
                 .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
                     self.scrollPosition = value
                     if self.vm.isScrollNearLastRow(currentOffsetY: self.scrollPosition.y) {
@@ -76,12 +96,6 @@ struct DailyNewsView: View {
         }
         
         
-    }
-}
-struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue: CGPoint = .zero
-    
-    static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) {
     }
 }
 

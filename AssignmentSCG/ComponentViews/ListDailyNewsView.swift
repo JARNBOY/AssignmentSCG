@@ -21,15 +21,21 @@ struct ListDailyNewsView: View {
                 RowNewsView( article: article )
             }
         }//: ForEach
+        
     }
 }
 
 struct ListDailyNewsView_Previews: PreviewProvider {
     static var previews: some View {
+        @State var vm = DailyNewsViewModel()
+        
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    ListDailyNewsView(articles: dataNewsMock.articles)
+//                    ListDailyNewsView(articles: dataNewsMock.articles)
+                    ListDailyNewsView(
+                        articles: []
+                    )
                 }
             }
         }
