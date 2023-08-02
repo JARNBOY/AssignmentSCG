@@ -17,7 +17,7 @@ class MockDailyNewsService: NewsService {
         let data = try await APIManager.shared.request(endpoint: url, method: .get, headers: nil, body: nil)
         
         if isSuccess {
-            return dataNewsMock
+            return error == .failedNilData ? NewsModel() : dataNewsMock
         } else {
             throw error
         }
@@ -27,7 +27,7 @@ class MockDailyNewsService: NewsService {
         let data = try await APIManager.shared.request(endpoint: url, method: .get, headers: nil, body: nil)
         
         if isSuccess {
-            return dataNewsMock
+            return error == .failedNilData ? NewsModel() : dataNewsMock
         } else {
             throw error
         }
@@ -103,6 +103,65 @@ class DailyNewsViewModelTests: XCTestCase {
         
     }
     
+    func testSearchNews_request_failedLimitRequest() async throws {
+        // Given
+        let expectation = expectation(description: "Search News Fail Expectation")
+        let searchText = ""
+        // When
+        serviceMock.isSuccess = false
+        serviceMock.error = .failedLimitRequest
+        await viewModel.searchNews(searchText: searchText)
+        
+        // Then
+        let articles = await viewModel.articles
+        let error = await viewModel.error ?? .failedUnknown
+        let isEmptyNewsData = await viewModel.isEmptyNewsData
+        XCTAssertFalse(articles.count > 0, "Articles should not be empty")
+        XCTAssertTrue(error == ErrorType.failedLimitRequest, "Error failedInvalidURL")
+        expectation.fulfill()
+        await(fulfillment(of: [expectation]))
+        
+    }
+    
+    func testSearchNews_request_success_failedNilData() async throws {
+        // Given
+        let expectation = expectation(description: "Search News Fail Expectation")
+        let searchText = ""
+        // When
+        serviceMock.isSuccess = true
+        serviceMock.error = .failedNilData
+        await viewModel.searchNews(searchText: searchText)
+        
+        // Then
+        let articles = await viewModel.articles
+        let error = await viewModel.error ?? .failedUnknown
+        let isEmptyNewsData = await viewModel.isEmptyNewsData
+        XCTAssertFalse(articles.count > 0, "Articles should not be empty")
+        XCTAssertTrue(error == ErrorType.failedNilData, "Error failedInvalidURL")
+        expectation.fulfill()
+        await(fulfillment(of: [expectation]))
+        
+    }
+    
+    func testSearchNews_request_fail_failedNilData() async throws {
+        // Given
+        let expectation = expectation(description: "Search News Fail Expectation")
+        let searchText = ""
+        // When
+        serviceMock.isSuccess = false
+        serviceMock.error = .failedNilData
+        await viewModel.searchNews(searchText: searchText)
+        
+        // Then
+        let articles = await viewModel.articles
+        let error = await viewModel.error ?? .failedUnknown
+        let isEmptyNewsData = await viewModel.isEmptyNewsData
+        XCTAssertFalse(articles.count > 0, "Articles should not be empty")
+        XCTAssertTrue(error == ErrorType.failedNilData, "Error failedInvalidURL")
+        expectation.fulfill()
+        await(fulfillment(of: [expectation]))
+        
+    }
 
     func testRefreshNews_request_success() async throws {
         // Given
