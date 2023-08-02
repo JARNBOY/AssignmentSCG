@@ -53,7 +53,7 @@ public struct RowNewsView: View {
             
             Image(systemName: "chevron.forward")
                 .fontWeight(.bold)
-                .foregroundColor(.accentColor)
+                .foregroundColor(.black)
         }
         
         .padding()
