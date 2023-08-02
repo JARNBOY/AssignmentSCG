@@ -39,14 +39,7 @@ struct DailyNewsView: View {
                     Spacer()
                     
                     //MARK: ListDailyNewsView
-                    ForEach(vm.articles, id: \.id) { article in
-                        
-                        NavigationLink(destination: DetailNewsView(article: article)
-                            .hideNavigationBarBsforeDestinationViewLink()
-                        ) {
-                            RowNewsView( article: article )
-                        }
-                    }//: ForEach
+                    ListDailyNewsView(articles: vm.articles)
                     
                     //MARK: EmptyRetryView
                     

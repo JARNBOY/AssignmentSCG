@@ -11,6 +11,7 @@ struct SearchView: View {
     //MARK: PROPERTY
     @Binding var searchText: String
     @Binding var isTextFieldDidEndEditing: Bool
+    
     //MARK: BODY
     var body: some View {
         HStack {
