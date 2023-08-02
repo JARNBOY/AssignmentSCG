@@ -70,6 +70,7 @@
 		FB995FBC2A79DFCC00B080C8 /* ScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewExtension.swift; sourceTree = "<group>"; };
 		FB995FC42A7A00C100B080C8 /* AssignmentSCGTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AssignmentSCGTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB995FCD2A7A025600B080C8 /* DailyNewsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyNewsViewModelTests.swift; sourceTree = "<group>"; };
+		FB995FD12A7A364000B080C8 /* LogicTests.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = LogicTests.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FB9976B12A7804B6006804CA /* NavigationViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewExtension.swift; sourceTree = "<group>"; };
 		FB9976B32A780990006804CA /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		FB9976B52A780D05006804CA /* MockDataPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataPreview.swift; sourceTree = "<group>"; };
@@ -108,6 +109,7 @@
 			children = (
 				FB9460482A77AC790055E708 /* AssignmentSCG */,
 				FB995FC52A7A00C100B080C8 /* AssignmentSCGTests */,
+				FB995FCF2A7A349F00B080C8 /* LogicTest */,
 				FB9460472A77AC790055E708 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -213,6 +215,14 @@
 				FB995FCD2A7A025600B080C8 /* DailyNewsViewModelTests.swift */,
 			);
 			path = AssignmentSCGTests;
+			sourceTree = "<group>";
+		};
+		FB995FCF2A7A349F00B080C8 /* LogicTest */ = {
+			isa = PBXGroup;
+			children = (
+				FB995FD12A7A364000B080C8 /* LogicTests.playground */,
+			);
+			path = LogicTest;
 			sourceTree = "<group>";
 		};
 		FB9976B02A78049F006804CA /* Extension */ = {
