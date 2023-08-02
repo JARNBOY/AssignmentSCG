@@ -27,12 +27,23 @@
 		FB995FB92A79DD4500B080C8 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB995FB82A79DD4500B080C8 /* EmptyDataView.swift */; };
 		FB995FBB2A79DE2D00B080C8 /* RetryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB995FBA2A79DE2D00B080C8 /* RetryView.swift */; };
 		FB995FBD2A79DFCC00B080C8 /* ScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB995FBC2A79DFCC00B080C8 /* ScrollViewExtension.swift */; };
+		FB995FCE2A7A025600B080C8 /* DailyNewsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB995FCD2A7A025600B080C8 /* DailyNewsViewModelTests.swift */; };
 		FB9976B22A7804B6006804CA /* NavigationViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9976B12A7804B6006804CA /* NavigationViewExtension.swift */; };
 		FB9976B42A780990006804CA /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9976B32A780990006804CA /* NewsModel.swift */; };
 		FB9976B62A780D05006804CA /* MockDataPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9976B52A780D05006804CA /* MockDataPreview.swift */; };
 		FB9976BA2A781C97006804CA /* SpaceTextScaleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9976B92A781C97006804CA /* SpaceTextScaleView.swift */; };
 		FB9976BC2A781DA3006804CA /* DateTextModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9976BB2A781DA3006804CA /* DateTextModifier.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FB995FC82A7A00C100B080C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB94603E2A77AC790055E708 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB9460452A77AC790055E708;
+			remoteInfo = AssignmentSCG;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		FB8E3C0D2A788FEB005A87EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
@@ -57,6 +68,8 @@
 		FB995FB82A79DD4500B080C8 /* EmptyDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
 		FB995FBA2A79DE2D00B080C8 /* RetryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryView.swift; sourceTree = "<group>"; };
 		FB995FBC2A79DFCC00B080C8 /* ScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewExtension.swift; sourceTree = "<group>"; };
+		FB995FC42A7A00C100B080C8 /* AssignmentSCGTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AssignmentSCGTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB995FCD2A7A025600B080C8 /* DailyNewsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyNewsViewModelTests.swift; sourceTree = "<group>"; };
 		FB9976B12A7804B6006804CA /* NavigationViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewExtension.swift; sourceTree = "<group>"; };
 		FB9976B32A780990006804CA /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		FB9976B52A780D05006804CA /* MockDataPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataPreview.swift; sourceTree = "<group>"; };
@@ -66,6 +79,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		FB9460432A77AC790055E708 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB995FC12A7A00C100B080C8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -87,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				FB9460482A77AC790055E708 /* AssignmentSCG */,
+				FB995FC52A7A00C100B080C8 /* AssignmentSCGTests */,
 				FB9460472A77AC790055E708 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				FB9460462A77AC790055E708 /* AssignmentSCG.app */,
+				FB995FC42A7A00C100B080C8 /* AssignmentSCGTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,6 +207,14 @@
 			path = Modify;
 			sourceTree = "<group>";
 		};
+		FB995FC52A7A00C100B080C8 /* AssignmentSCGTests */ = {
+			isa = PBXGroup;
+			children = (
+				FB995FCD2A7A025600B080C8 /* DailyNewsViewModelTests.swift */,
+			);
+			path = AssignmentSCGTests;
+			sourceTree = "<group>";
+		};
 		FB9976B02A78049F006804CA /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +246,24 @@
 			productReference = FB9460462A77AC790055E708 /* AssignmentSCG.app */;
 			productType = "com.apple.product-type.application";
 		};
+		FB995FC32A7A00C100B080C8 /* AssignmentSCGTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB995FCA2A7A00C100B080C8 /* Build configuration list for PBXNativeTarget "AssignmentSCGTests" */;
+			buildPhases = (
+				FB995FC02A7A00C100B080C8 /* Sources */,
+				FB995FC12A7A00C100B080C8 /* Frameworks */,
+				FB995FC22A7A00C100B080C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FB995FC92A7A00C100B080C8 /* PBXTargetDependency */,
+			);
+			name = AssignmentSCGTests;
+			productName = AssignmentSCGTests;
+			productReference = FB995FC42A7A00C100B080C8 /* AssignmentSCGTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -228,6 +276,10 @@
 				TargetAttributes = {
 					FB9460452A77AC790055E708 = {
 						CreatedOnToolsVersion = 14.3.1;
+					};
+					FB995FC32A7A00C100B080C8 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = FB9460452A77AC790055E708;
 					};
 				};
 			};
@@ -245,6 +297,7 @@
 			projectRoot = "";
 			targets = (
 				FB9460452A77AC790055E708 /* AssignmentSCG */,
+				FB995FC32A7A00C100B080C8 /* AssignmentSCGTests */,
 			);
 		};
 /* End PBXProject section */
@@ -256,6 +309,13 @@
 			files = (
 				FB9460512A77AC7C0055E708 /* Preview Assets.xcassets in Resources */,
 				FB94604E2A77AC7C0055E708 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB995FC22A7A00C100B080C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,7 +352,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FB995FC02A7A00C100B080C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB995FCE2A7A025600B080C8 /* DailyNewsViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FB995FC92A7A00C100B080C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB9460452A77AC790055E708 /* AssignmentSCG */;
+			targetProxy = FB995FC82A7A00C100B080C8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		FB9460522A77AC7C0055E708 /* Debug */ = {
@@ -467,6 +543,44 @@
 			};
 			name = Release;
 		};
+		FB995FCB2A7A00C100B080C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85JY49Q86S;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.papon.AssignmentSCGTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AssignmentSCG.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AssignmentSCG";
+			};
+			name = Debug;
+		};
+		FB995FCC2A7A00C100B080C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85JY49Q86S;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.papon.AssignmentSCGTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AssignmentSCG.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AssignmentSCG";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -484,6 +598,15 @@
 			buildConfigurations = (
 				FB9460552A77AC7C0055E708 /* Debug */,
 				FB9460562A77AC7C0055E708 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB995FCA2A7A00C100B080C8 /* Build configuration list for PBXNativeTarget "AssignmentSCGTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB995FCB2A7A00C100B080C8 /* Debug */,
+				FB995FCC2A7A00C100B080C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -62,7 +62,7 @@ enum LoadStatus: Equatable {
     case done
 }
 
-enum ErrorType: LocalizedError {
+enum ErrorType: LocalizedError, Equatable {
     case custom(error: Error)
     case failedToResponse
     case failedToDecode
@@ -92,6 +92,10 @@ enum ErrorType: LocalizedError {
         case .failedLimitRequest:
             return "Failed Limited Request"
         }
+    }
+    
+    static func == (lhs: ErrorType, rhs: ErrorType) -> Bool {
+        return lhs.errorDescription == rhs.errorDescription
     }
 }
 

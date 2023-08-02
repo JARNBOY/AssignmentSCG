@@ -38,6 +38,8 @@ protocol DailyNewsViewModelInterface {
         self.service = service
     }
     
+    //MARK: for Unittest and logic property
+//    var articleIsEmpty: Bool async { return articles.isEmpty }
 }
 
 //MARK: ViewModel - Modify Extension Interface
