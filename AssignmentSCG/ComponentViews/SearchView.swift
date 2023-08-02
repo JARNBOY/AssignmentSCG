@@ -9,8 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
     //MARK: PROPERTY
-    @Binding var searchText: String
-    @Binding var isRequestNewsSearch: Bool
+    @State private var searchText: String = ""
     
     @FocusState private var searchTextFieldIsFocused: Bool
     @StateObject var vm : DailyNewsViewModel
@@ -38,7 +37,9 @@ struct SearchView: View {
                     "Placeholder",
                     text: $searchText,
                     onCommit: {
-                        self.isRequestNewsSearch = true
+                        Task {
+                            await vm.searchNews(searchText: searchText)
+                        }
                     }
                 )//: TextField
                 .focused($searchTextFieldIsFocused)
@@ -74,11 +75,8 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
         @State var searchText: String = ""
-        @State var isRequestNewsSearch: Bool = false
         
         SearchView(
-            searchText: $searchText,
-            isRequestNewsSearch: $isRequestNewsSearch,
             vm: DailyNewsViewModel()
         )
     }

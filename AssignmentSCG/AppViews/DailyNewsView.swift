@@ -9,8 +9,6 @@ import SwiftUI
 
 struct DailyNewsView: View {
     //MARK: PROPERTY
-    @State private var searchText: String = ""
-    @State private var isRequestNewsSearch: Bool = false
     @State private var scrollPosition: CGPoint = .zero
     @StateObject private var vm = DailyNewsViewModel()
     
@@ -23,19 +21,8 @@ struct DailyNewsView: View {
                 VStack {
                     //MARK: SearchView
                     SearchView(
-                        searchText: $searchText,
-                        isRequestNewsSearch: $isRequestNewsSearch,
                         vm: vm
                     )
-                    .onSubmit {
-                        Task {
-                            if isRequestNewsSearch {
-                                await vm.searchNews(searchText: searchText)
-                                isRequestNewsSearch = false
-                            }
-                        }
-                        
-                    }
                     
                     Spacer()
                     
