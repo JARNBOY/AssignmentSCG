@@ -39,6 +39,6 @@ struct ImageNewsView: View {
 
 struct ImageNewsView_Previews: PreviewProvider {
     static var previews: some View {
-        ImageNewsView(contentMode: .fill, maxHeight: 200, urlString: imageURLMock)
+        ImageNewsView(contentMode: .fill, maxHeight: 360, urlString: imageURLMock)
     }
 }

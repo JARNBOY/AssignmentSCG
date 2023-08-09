@@ -13,47 +13,77 @@ struct DetailNewsView: View {
     
     @State var article: Article
     @State private var isAnimating: Bool = false
-    
+    @State var offsetImageScale: CGFloat = 0
     //MARK: BODY
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
                 
-                VStack(alignment: .leading, spacing: 8) {
-                    //MARK: ImageNewsView
-                    ImageNewsView(
-                        contentMode: .fill,
-                        maxHeight: maxRowImageHight,
-                        urlString: article.urlToImage ?? ""
-                    )
+                VStack(alignment: .center, spacing: 8) {
+                    //MARK: HeaderView
+                    GeometryReader { proxy -> AnyView in
+                        
+                        //Sticky Header
+                        let minY = proxy.frame(in: .global).minY
+                        
+                        DispatchQueue.main.async {
+                            self.offsetImageScale = minY
+                        }
+                        
+                        return AnyView (
+                            ZStack {
+                                AsyncImage(
+                                    url: URL(string: article.urlToImage ?? ""),
+                                    content: { image in
+                                        image.resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: gotRect().width ,height: minY > 0 ? 200 + minY : nil)
+                                    },
+                                    placeholder: {
+                                        ProgressView()
+                                    }
+                                )
+                                .frame(height: minY > 0 ? 200 + minY : nil)
+                                .scaleEffect(isAnimating ? 1.0 : 0.6)
+                            }
+                            
+                        )
+                        
+                    }//: HeaderView
+                    .frame( height: 200)
                     
-                    //MARK: Title
-                    Text(article.title ?? "")
-                        .modifier(TitleModifier())
-                        .padding(.top)
-                        .padding(.horizontal)
-                        .opacity(isAnimating ? 1 : 0)
-                    
-                    //MARK: Desc
-                    Text(article.description ?? "")
-                        .modifier(DsecModifier())
-                        .padding(.horizontal)
-                        .opacity(isAnimating ? 1 : 0)
-                    
-                    //MARK: Date
-                    Text("Updated: \((article.publishedAt ?? "").toDateNewsDisplay())")
-                        .modifier(DateTextModifier())
-                        .padding(.horizontal)
-                        .opacity(isAnimating ? 1 : 0)
-                    
-                    //MARK: Spacer White Bottom
-                    SpaceTextScaleView()
-                    
-                    Spacer()
+                    //MARK: Description
+                    VStack {
+                        //MARK: Title
+                        Text(article.title ?? "")
+                            .modifier(TitleModifier())
+                            .padding(.top)
+                            .padding(.horizontal)
+                            .opacity(isAnimating ? 1 : 0)
+                        
+                        //MARK: Desc
+                        Text(article.description ?? "")
+                            .modifier(DsecModifier())
+                            .padding(.horizontal)
+                            .opacity(isAnimating ? 1 : 0)
+                        
+                        //MARK: Date
+                        Text("Updated: \((article.publishedAt ?? "").toDateNewsDisplay())")
+                            .modifier(DateTextModifier())
+                            .padding(.horizontal)
+                            .opacity(isAnimating ? 1 : 0)
+                        
+                        //MARK: Spacer White Bottom
+                        SpaceTextScaleView()
+                        
+                        Spacer()
+                    }//: VStack
+                    .offset(y : 100)
                 }//: VStack
                 .navigationBarTitle("Detail", displayMode: .inline)
                 .navigationBarHidden(false)
                 .background(.white)
+                
                 
             }//: ScrollView
             .padding(.top, 4)

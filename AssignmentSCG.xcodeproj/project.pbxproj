@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB0D97972A83823D007F89BC /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0D97962A83823D007F89BC /* View.swift */; };
 		FB8E3C0E2A788FEB005A87EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8E3C0D2A788FEB005A87EA /* DateExtension.swift */; };
 		FB8E3C102A788FF6005A87EA /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8E3C0F2A788FF6005A87EA /* StringExtension.swift */; };
 		FB8F45DC2A79659600B4FAA9 /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F45DB2A79659600B4FAA9 /* NewsService.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FB0D97962A83823D007F89BC /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		FB8E3C0D2A788FEB005A87EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		FB8E3C0F2A788FF6005A87EA /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		FB8F45DB2A79659600B4FAA9 /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				FB8E3C0D2A788FEB005A87EA /* DateExtension.swift */,
 				FB8E3C0F2A788FF6005A87EA /* StringExtension.swift */,
 				FB995FBC2A79DFCC00B080C8 /* ScrollViewExtension.swift */,
+				FB0D97962A83823D007F89BC /* View.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				FB995FB92A79DD4500B080C8 /* EmptyDataView.swift in Sources */,
 				FB8F45DC2A79659600B4FAA9 /* NewsService.swift in Sources */,
 				FB9976B62A780D05006804CA /* MockDataPreview.swift in Sources */,
+				FB0D97972A83823D007F89BC /* View.swift in Sources */,
 				FB94604C2A77AC7A0055E708 /* DailyNewsView.swift in Sources */,
 				FB995FBB2A79DE2D00B080C8 /* RetryView.swift in Sources */,
 				FB9460722A77C3700055E708 /* TitleModifier.swift in Sources */,
