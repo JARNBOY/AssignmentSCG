@@ -33,7 +33,7 @@ struct ListDailyNewsView_Previews: PreviewProvider {
         
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
-                VStack {
+                LazyVStack {
                     ListDailyNewsView(articles: dataNewsMock.articles)
                         .opacity( isLoading ? 0.7 : 1 )
                         .animation(
