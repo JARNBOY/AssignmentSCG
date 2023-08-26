@@ -13,7 +13,9 @@ public struct RowNewsView: View {
     private let isDescLimitLine: Bool = true
     private let isDetailView: Bool = true
     
-    @State var article: Article
+    var article: Article
+    var isLastRow : Bool
+    @StateObject var vm : DailyNewsViewModel
     @State private var isAnimating: Bool = false
     
     //MARK: BODY
@@ -50,21 +52,29 @@ public struct RowNewsView: View {
                 Divider()
                     .padding(.vertical)
             }//: VStack
+            .frame(width: .infinity)
             
-            Image(systemName: "chevron.forward")
-                .fontWeight(.bold)
-                .foregroundColor(.black)
+//            Image(systemName: "chevron.forward")
+//                .fontWeight(.bold)
+//                .foregroundColor(.black)
         }
-        
+        .frame(width: .infinity)
         .padding()
         .onAppear {
             isAnimating = true
+            if isLastRow {
+                Task {
+                    print("isLastRow naja")
+                    await vm.requestNews(currentArticle: article)
+                }
+                
+            }
         }
     }
 }
 
 struct NewsView_Previews: PreviewProvider {
     static var previews: some View {
-        RowNewsView(article: dataArticleMock)
+        RowNewsView(article: dataArticleMock, isLastRow: false, vm: DailyNewsViewModel())
     }
 }
