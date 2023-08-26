@@ -27,6 +27,7 @@ struct ListDailyNewsView: View {
                         vm: vm)
                 }
                 .listRowSeparator(.hidden)
+                
             }//: ForEach
             .foregroundColor(.black)
         }

@@ -48,6 +48,19 @@ struct DailyNewsView: View {
                         articles: vm.articles,
                         vm: vm
                     )
+                    .gesture(
+                        DragGesture()
+                            .onChanged({ gesture in
+                                let tranlation: CGSize = gesture.translation
+                                if tranlation.height < -10 {
+                                    //scroll down
+                                    isScrolling = true
+                                } else if tranlation.height > 25 {
+                                    //scroll up
+                                    isScrolling = false
+                                }
+                            })
+                    )
                     .opacity( vm.loadStatus == LoadStatus.loading ? 0.7 : 1 )
                     .animation(
                         Animation
